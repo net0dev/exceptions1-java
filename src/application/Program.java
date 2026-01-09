@@ -18,32 +18,31 @@ public class Program {
             System.out.print("Room Number: ");
             int number = sc.nextInt();
             System.out.print("check-in date(dd/MM/yyyy): ");
-            Date checkiIn = sdf.parse(sc.next());
+            Date checkIn = sdf.parse(sc.next());
             System.out.print("check-out date(dd/MM/yyyy): ");
             Date checkOut = sdf.parse(sc.next());
 
-            if (!checkOut.after(checkiIn)) {
+            if (!checkOut.after(checkIn)) {
                 System.out.println("Error in reservation: Check-out date must be after check-in date");
             } else {
-                Reservation reservation = new Reservation(number, checkiIn, checkOut);
+                Reservation reservation = new Reservation(number, checkIn, checkOut);
                 System.out.println("Reservation: " + reservation);
 
                 System.out.println();
                 System.out.println("Enter data to update the reservation: ");
                 System.out.print("check-in date(dd/MM/yyyy): ");
-                checkiIn = sdf.parse(sc.next());
+                checkIn = sdf.parse(sc.next());
                 System.out.print("check-out date(dd/MM/yyyy): ");
                 checkOut = sdf.parse(sc.next());
 
+                   String error = reservation.updateDates(checkIn, checkOut);
+                   if(error != null){
+                       System.out.println("Error in reservation: " +  error);
 
-                Date now = new Date();
-                if (checkiIn.before(now) || checkOut.before(now)) {
-                    System.out.println("Error in reservation: Reservation dates for update must be future dates: ");
-                } else if (!checkOut.after(checkiIn)) {
-                    System.out.println("Error in reservation: Check-out date must be after check-in date");
-                } else {
-                    reservation.updateDates(checkiIn, checkOut);
-                    System.out.println("Reservation: " + reservation);
+                   } else{
+                       System.out.println("Reservation: " + reservation);
+                   }
+
 
                 }
 
@@ -54,5 +53,5 @@ public class Program {
         }
 
 
-    }
+
 }
